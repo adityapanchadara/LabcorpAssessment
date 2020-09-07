@@ -1,0 +1,14 @@
+<ul class="todo-list">
+  <ng-container *ngFor="let todo of todoList;let i= index">
+    <li [ngClass]="{'completed': todo.completed, 'editing':todo.edit}">
+      <div class="view">
+        <input class="toggle" type="checkbox" [attr.checked]=todo.completed
+          (click)="todo.completed = !todo.completed; updateActiveCount()" />
+        <label (dblclick)="todoEdit(i)">{{todo.text}}</label>
+        <button (click)="deleteTodo(i)" class="destroy"></button>
+      </div>
+      <input *ngIf="todo.edit" class="edit" (blur)="todoEdit(-1)" [(ngModel)]="todo.text">
+    </li>
+  </ng-container>
+  <div *ngIf="todoList.length === 0 && (tabName ==='Active' || tabName==='Completed')" class="no-matches">no todos are present</div>
+</ul>
